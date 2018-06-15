@@ -5,8 +5,10 @@ const bulidControl = (props) => (
         <div className={classes.Label}>
             {props.label}
         </div>
-        <button className={classes.Less}>Less </button>
-        <button className={classes.Morel}>More </button>
+        <button className={classes.Less} 
+        onClick={props.removed} 
+        disabled={props.disabled}>Less </button>
+        <button className={classes.Morel} onClick={props.added}>More </button>
     </div>
 );
 
