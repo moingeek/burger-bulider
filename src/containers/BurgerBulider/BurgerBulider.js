@@ -77,6 +77,10 @@ class BurgerBulider extends Component {
         this.setState({purchasing :false});
     }
 
+    purchaseContinueHandler = () => {
+        alert("You Contiue");
+    }
+
     render(){
         const disabledInfo ={
             ...this.state.indrigents
@@ -87,7 +91,10 @@ class BurgerBulider extends Component {
         return (
             <Aux>
                 <Modal show = {this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-                  <OrderSummary indrigents={this.state.indrigents} />  
+                  <OrderSummary 
+                  indrigents={this.state.indrigents} 
+                  purchaseCancled={this.purchaseCancelHandler}
+                  purchaseContinue ={this.purchaseContinueHandler}/>  
                 </Modal>
                 <Burger indrigents={this.state.indrigents}/>
                 <BulidControls 
