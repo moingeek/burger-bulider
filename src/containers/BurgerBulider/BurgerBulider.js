@@ -2,6 +2,8 @@ import React , {Component} from 'react';
 import Aux from '../../hoc/Aux';
 import Burger from '../../components/Burger/Burger';
 import BulidControls from '../../components/Burger/BulidControls/BulidControls';
+import Modal from '../../components/UI/Modal/Modal';
+import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 
 const INDRIGENTS_PRICES = {
     salad: 10,
@@ -18,7 +20,22 @@ class BurgerBulider extends Component {
             cheese :0,
             meat :0
         },
-        totalPrice : 14
+        totalPrice : 14,
+        purchaseable : false,
+        purchasing : false
+    }
+
+    updatePurchaseState (indrigents) {
+        // const indrigents = {
+        //     ...this.state.indrigents
+        // was giving an old copy for analaysis };
+        const sum = Object.keys(indrigents)
+        .map(igKey => {
+            return indrigents[igKey];
+        }).reduce((sum , el ) =>{
+            return sum +el;
+        },0);
+        this.setState({purchaseable : sum > 0});
     }
 
     addIndrigentHandler = (type) => {
@@ -32,7 +49,7 @@ class BurgerBulider extends Component {
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice + priceAddition;
         this.setState({totalPrice : newPrice , indrigents : updateIndrigents})
-
+        this.updatePurchaseState(updateIndrigents);
     }
 
     removeIndrigentHandler = (type) =>{
@@ -49,6 +66,11 @@ class BurgerBulider extends Component {
         const oldPrice = this.state.totalPrice;
         const newPrice = oldPrice -  priceDeduction;
         this.setState({totalPrice : newPrice , indrigents : updateIndrigents})
+        this.updatePurchaseState(updateIndrigents);
+    }
+
+    purchaseHandler = () => {
+        this.setState({purchasing : true});
     }
 
     render(){
@@ -60,11 +82,16 @@ class BurgerBulider extends Component {
         }
         return (
             <Aux>
+                <Modal show = {this.state.purchasing}>
+                  <OrderSummary indrigents={this.state.indrigents} />  
+                </Modal>
                 <Burger indrigents={this.state.indrigents}/>
                 <BulidControls 
                     indrigentAdded= {this.addIndrigentHandler}
                     indrigentRemoved = {this.removeIndrigentHandler}
                     disabled = {disabledInfo}
+                    purchaseable = {this.state.purchaseable}
+                    ordered = {this.purchaseHandler}
                     price = {this.state.totalPrice}/>
             </Aux>
         );
