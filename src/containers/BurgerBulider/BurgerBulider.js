@@ -94,7 +94,8 @@ class BurgerBulider extends Component {
                   <OrderSummary 
                   indrigents={this.state.indrigents} 
                   purchaseCancled={this.purchaseCancelHandler}
-                  purchaseContinue ={this.purchaseContinueHandler}/>  
+                  purchaseContinue ={this.purchaseContinueHandler}
+                  price = {this.state.totalPrice}/>  
                 </Modal>
                 <Burger indrigents={this.state.indrigents}/>
                 <BulidControls 
