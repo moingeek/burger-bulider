@@ -4,8 +4,8 @@ import Logo from '../../Logo/Logo';
 import NavigationItems from '../../Navigation/NavigationItems/NavigationItems';
 const sideDrawer = (props) => {
     return (
-        <div>
-            <Logo  heigth="11%"/>
+        <div className={classes.SideDrawer}>
+            <Logo  height="11%"/>
             <nav>
                 <NavigationItems />
             </nav>
