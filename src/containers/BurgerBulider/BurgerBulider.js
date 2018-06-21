@@ -6,6 +6,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
 import axios from '../../axios-orders';
 import Spinner from '../../components/UI/Spinner/Spinner';
+import withErrorHandler from '../../hoc/withErrorHandler/withErrorHandler';
 
 const INDRIGENTS_PRICES = {
     salad: 10,
@@ -16,16 +17,18 @@ const INDRIGENTS_PRICES = {
 
 class BurgerBulider extends Component {
     state = {
-        indrigents:{
-            salad :0,
-            bacon: 0,
-            cheese :0,
-            meat :0
-        },
+        indrigents: null,
         totalPrice : 14,
         purchaseable : false,
         purchasing : false,
         loading : false
+    }
+
+    componentDidMount(){
+        axios.get('https://burger-guide-4c32e.firebaseio.com/indrigents.json')
+        .then(response => {
+            this.setState({indrigents : response.data});
+        });
     }
 
     updatePurchaseState (indrigents) {
@@ -87,9 +90,9 @@ class BurgerBulider extends Component {
             ingredients : this.state.indrigents,
             price : this.state.totalPrice,
             customer : {
-                name: 'Suleman Khan',
+                name: 'test',
                 address :{
-                    street : 'Sion',
+                    street : 'test',
                     zipCode :'400601',
                     Country : 'India'
                 },
@@ -114,31 +117,40 @@ class BurgerBulider extends Component {
             disabledInfo[key] = disabledInfo[key] <= 0
         }
 
-        let orderSummary =  <OrderSummary 
-        indrigents={this.state.indrigents} 
-        purchaseCancled={this.purchaseCancelHandler}
-        purchaseContinue ={this.purchaseContinueHandler}
-        price = {this.state.totalPrice}/> 
+        let orderSummary =  null;
         
-        if(this.state.loading){
-            orderSummary = <Spinner />;
-        }
-
-        return (
-            <Aux>
-                <Modal show = {this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-                   {orderSummary}
-                </Modal>
-                <Burger indrigents={this.state.indrigents}/>
-                <BulidControls 
+        let burger = <Spinner />;
+        if(this.state.indrigents){
+            burger = (
+                <Aux>
+                    <Burger indrigents={this.state.indrigents}/>
+                    <BulidControls 
                     indrigentAdded= {this.addIndrigentHandler}
                     indrigentRemoved = {this.removeIndrigentHandler}
                     disabled = {disabledInfo}
                     purchaseable = {this.state.purchaseable}
                     ordered = {this.purchaseHandler}
                     price = {this.state.totalPrice}/>
+                </Aux>
+            );
+            orderSummary= <OrderSummary 
+                indrigents={this.state.indrigents} 
+                purchaseCancled={this.purchaseCancelHandler}
+                purchaseContinue ={this.purchaseContinueHandler}
+                price = {this.state.totalPrice}/> 
+        }
+        if(this.state.loading){
+            orderSummary = <Spinner />;
+        }
+    
+        return (
+            <Aux>
+                <Modal show = {this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+                   {orderSummary}
+                </Modal>
+                {burger}
             </Aux>
         );
     }
 }
-export default BurgerBulider;
+export default withErrorHandler(BurgerBulider, axios);
