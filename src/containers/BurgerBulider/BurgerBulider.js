@@ -4,6 +4,7 @@ import Burger from '../../components/Burger/Burger';
 import BulidControls from '../../components/Burger/BulidControls/BulidControls';
 import Modal from '../../components/UI/Modal/Modal';
 import OrderSummary from '../../components/Burger/OrderSummary/OrderSummary';
+import axios from '../../axios-orders';
 
 const INDRIGENTS_PRICES = {
     salad: 10,
@@ -78,7 +79,24 @@ class BurgerBulider extends Component {
     }
 
     purchaseContinueHandler = () => {
-        alert("You Contiue");
+        // alert("You Contiue");
+        const order = {
+            ingredients : this.state.indrigents,
+            price : this.state.totalPrice,
+            customer : {
+                name: 'Moin Gadkari',
+                address :{
+                    street : 'Rabodi',
+                    zipCode :'400601',
+                    Country : 'India'
+                },
+                email : 'test@test.com'
+            },
+            deliveryMethod : 'fastest'
+        }
+        axios.post('/orders.json',order)
+        .then(response => console.log(response))
+        .catch(error => console.log(error));
     }
 
     render(){
