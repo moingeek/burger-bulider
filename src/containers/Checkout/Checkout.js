@@ -41,7 +41,7 @@ class Checkout extends Component {
 
                 <Route 
                 path={this.props.match.path +'/contact-data'} 
-                render={()=> (<ContactData indrigents={this.state.indrigents}/>)} />
+                render={(props)=> (<ContactData indrigents={this.state.indrigents} {...props}/>)} />
             </div>
         );
     }
