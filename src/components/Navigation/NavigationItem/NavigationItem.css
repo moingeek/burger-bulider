@@ -13,7 +13,9 @@
     display: block;
 }
 
-.NavigationItem a:hover,.NavigationItem a:active,.NavigationItem a.active{
+.NavigationItem a:hover,
+.NavigationItem a:active,
+.NavigationItem a.active{
 
     color: #40A4C8;
 
