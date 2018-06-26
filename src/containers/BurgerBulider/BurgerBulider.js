@@ -85,32 +85,13 @@ class BurgerBulider extends Component {
 
     purchaseContinueHandler = () => {
         // alert("You Contiue");
-        // this.setState({loading:true});
-        // const order = {
-        //     ingredients : this.state.indrigents,
-        //     price : this.state.totalPrice,
-        //     customer : {
-        //         name: 'test',
-        //         address :{
-        //             street : 'test',
-        //             zipCode :'400601',
-        //             Country : 'India'
-        //         },
-        //         email : 'test@test.com'
-        //     },
-        //     deliveryMethod : 'fastest'
-        // }
-        // axios.post('/orders.json',order)
-        // .then(response => {
-        //     this.setState({loading:false,purchasing:false});
-        // })
-        // .catch(error => {
-        //     this.setState({loading:false,purchasing:false});
-        // });
         const queryParams = [];
         for(let i in this.state.indrigents){
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.indrigents[i]));
         }
+
+        queryParams.push('Price' + this.state.totalPrice);
+
         const queryString = queryParams.join('&');
         this.props.history.push({
             pathname :'/checkout',
