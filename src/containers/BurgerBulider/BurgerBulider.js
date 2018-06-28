@@ -90,7 +90,7 @@ class BurgerBulider extends Component {
             queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.indrigents[i]));
         }
 
-        queryParams.push('Price' + this.state.totalPrice);
+        queryParams.push('Price=' + this.state.totalPrice);
 
         const queryString = queryParams.join('&');
         this.props.history.push({
