@@ -12,7 +12,7 @@ const INDRIGENTS_PRICES = {
     meat :60
 }
 
-const reducer = ( state = initialState, action ) => {
+const burgerreducer = ( state = initialState, action ) => {
     switch ( action.type ) {
         case actionTypes.ADD_INGREDIENT:
             return {
@@ -48,4 +48,4 @@ const reducer = ( state = initialState, action ) => {
     }
 };
 
-export default reducer;
+export default burgerreducer;

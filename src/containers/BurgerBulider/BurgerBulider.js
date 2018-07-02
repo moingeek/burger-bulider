@@ -151,8 +151,8 @@ class BurgerBulider extends Component {
 
 const mapStateToProps = state => {
     return {
-        ings: state.ingredients,
-        price: state.totalPrice
+        ings: state.burgerreducer.ingredients,
+        price: state.burgerreducer.totalPrice
     };
 }
 
