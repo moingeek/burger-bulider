@@ -23,14 +23,14 @@ class BurgerBulider extends Component {
     state = {
 
         purchasing : false,
-        loading : false
     }
 
     componentDidMount(){
         // axios.get('https://burger-guide-4c32e.firebaseio.com/indrigents.json')
         // .then(response => {
         //     this.setState({indrigents : response.data});
-        // });
+        // });This is comment cause redux async
+        this.props.onInitIngredients();
     }
 
     updatePurchaseState (indrigents) {
@@ -134,9 +134,9 @@ class BurgerBulider extends Component {
                 purchaseContinue ={this.purchaseContinueHandler}
                 price = {this.props.price}/> 
         }
-        if(this.state.loading){
-            orderSummary = <Spinner />;
-        }
+        // if(this.state.loading){
+        //     orderSummary = <Spinner />;
+        // }
     
         return (
             <Aux>
@@ -159,7 +159,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
     return {
         onIngredientAdded: (ingName) => dispatch(BurgerBuliderActions.addIngredient(ingName)),
-        onIngredientRemoved: (ingName) => dispatch(BurgerBuliderActions.removeIngredient(ingName))
+        onIngredientRemoved: (ingName) => dispatch(BurgerBuliderActions.removeIngredient(ingName)),
+        onInitIngredients :() => dispatch(BurgerBuliderActions.initIngredients())
     }
 }
 
