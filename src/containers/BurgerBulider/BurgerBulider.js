@@ -86,19 +86,21 @@ class BurgerBulider extends Component {
     }
 
     purchaseContinueHandler = () => {
-        // alert("You Contiue");
-        const queryParams = [];
-        for(let i in this.state.indrigents){
-            queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.indrigents[i]));
-        }
+        // alert("You Contiue");Due to redux all is commented
+        // const queryParams = [];
+        // for(let i in this.state.indrigents){
+        //     queryParams.push(encodeURIComponent(i) + '=' + encodeURIComponent(this.state.indrigents[i]));
+        // }
 
-        queryParams.push('Price=' + this.state.totalPrice);
+        // queryParams.push('Price=' + this.state.totalPrice);
 
-        const queryString = queryParams.join('&');
-        this.props.history.push({
-            pathname :'/checkout',
-            search: '?'+queryString
-        });
+        // const queryString = queryParams.join('&');
+        // this.props.history.push({
+        //     pathname :'/checkout',
+        //     search: '?'+queryString
+        // });
+        this.props.history.push('/checkout');
+
     }
 
     render(){
