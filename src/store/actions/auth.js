@@ -37,12 +37,12 @@ export const auth = (email, password, isSignup) => {
         }
         axios.post(url, authData)
             .then(response => {
-                console.log(response);
+               // console.log(response);
                 dispatch(authSuccess(response.data.idToken, response.data.localId));
             })
             .catch(err => {
-                console.log(err);
-                dispatch(authFail(err));
+                //console.log(err);
+                dispatch(authFail(err.response.data.error));
             });
     };
 };
