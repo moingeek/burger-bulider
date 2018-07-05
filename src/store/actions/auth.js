@@ -2,6 +2,7 @@ import axios from 'axios';
 
 import * as actionTypes from './actionTypes';
 
+
 export const authStart = () => {
     return {
         type: actionTypes.AUTH_START
@@ -23,6 +24,20 @@ export const authFail = (error) => {
     };
 };
 
+export const logout = () =>{
+    return{
+        type:actionTypes.LOGOUT
+    };
+};
+
+export const chechAuthTimeout = (expirationTime) =>{
+    return dispatch => {
+        setTimeout( () => {
+           dispatch(logout());
+        },expirationTime * 1000);
+    };
+};
+
 export const auth = (email, password, isSignup) => {
     return dispatch => {
         dispatch(authStart());
@@ -39,6 +54,7 @@ export const auth = (email, password, isSignup) => {
             .then(response => {
                // console.log(response);
                 dispatch(authSuccess(response.data.idToken, response.data.localId));
+                dispatch(chechAuthTimeout(response.data.expiresIn));
             })
             .catch(err => {
                 //console.log(err);
